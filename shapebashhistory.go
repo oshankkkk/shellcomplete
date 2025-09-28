@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os/user"
 	"os"
+	"sort"
 )
 func getbashhistory()(*os.File,error){
 	currentuser,err:=user.Current()
@@ -32,10 +33,35 @@ func readbashhistory(historyfile *os.File) []string{
 		historylist=append(historylist,line)
 	}
 
-	// Check for any errors during scanning
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading file:", err)
 	}
 	return historylist
 
 }
+type sortedcmds struct {
+	cmd string
+	distance int
+}
+func sortbashhistory(usercmd string, bashhistory []string)[]string{
+	var sortedbashhistory []sortedcmds
+
+	for _, cmds := range bashhistory {
+		sortedbashhistory = append(sortedbashhistory,sortedcmds{
+			cmd:      cmds,
+			distance: editDistance(cmds, usercmd),
+		})
+	}
+	sort.Slice(sortedbashhistory, func(i, j int) bool {
+		return sortedbashhistory[i].distance < sortedbashhistory[j].distance
+	})
+
+	result := []string{}
+	for _, sc := range sortedbashhistory {
+		result = append(result, sc.cmd)
+	}
+
+	return result
+}
+
+
