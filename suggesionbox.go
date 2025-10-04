@@ -2,14 +2,19 @@ package main
 
 import (
 	"strings"
-
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type model struct {
 	showsuggestions bool
 	suggestions     []string
 }
+var suggestionBoxStyle = lipgloss.NewStyle().
+    Background(lipgloss.Color("#303446")). 
+    Foreground(lipgloss.Color("#f2d5cf")).     
+    Border(lipgloss.RoundedBorder()).
+Padding(1,2 ) 
 
 func initialModel() model {
 	return model{
@@ -43,9 +48,13 @@ func (m model) View() string {
 	if m.showsuggestions {
 		for _, s := range m.suggestions {
 			builder.WriteString( " " + s + "\n")
+
 		}
 	}
-	return builder.String()
+
+
+	list:=builder.String()
+	return suggestionBoxStyle.Render(list)	
 
 }
 
