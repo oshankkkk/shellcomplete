@@ -6,7 +6,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-type model struct {
+type suggestionbox struct {
 	showsuggestions bool
 	suggestions     []string
 }
@@ -16,23 +16,28 @@ var suggestionBoxStyle = lipgloss.NewStyle().
     Border(lipgloss.RoundedBorder()).
 Padding(1,2 ) 
 
-func initialModel() model {
-	return model{
+func initialModel() suggestionbox{
+	// get the user input data
+	// match and sort it
+	// put it into the suggestions
+	// view it
+
+	return suggestionbox{
 		showsuggestions: true,
 		suggestions:     []string{"ls", "cd", "git status", "go run"},
 	}
 }
 
-func (m model) Init() tea.Cmd {
+func (s suggestionbox) Init() tea.Cmd {
 	return nil
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (s suggestionbox) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg:=msg.(type){
 	case tea.KeyMsg:
 		switch msg.String(){
 		case "q":
-			return m,tea.Quit
+			return s,tea.Quit
 
 		}
 
@@ -40,13 +45,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 
 	}
-	return m,nil
+	return s,nil
 }
 
-func (m model) View() string {
+func (s suggestionbox) View() string {
 	var builder strings.Builder
-	if m.showsuggestions {
-		for _, s := range m.suggestions {
+	if s.showsuggestions {
+		for _, s := range s.suggestions {
 			builder.WriteString( " " + s + "\n")
 
 		}
