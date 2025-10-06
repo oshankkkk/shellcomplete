@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 getuserinput(){
-	echo $COMP_LINE
-	local suggesions	
-	suggesions=$(go run main.go "$COMP_LINE")
-	echo "Go output: $suggestions" 
+	s=$(go run . "$COMP_LINE")
+#	echo "Go output: $s"
 }
 complete -D -F getuserinput
