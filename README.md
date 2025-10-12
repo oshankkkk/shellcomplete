@@ -14,6 +14,18 @@
 - Store each command as a list of tokens:
 - Store each command line as a string list → e.g.
 ["git", "commit", "-m", "init"].
+#### - Bash
+- Its the CLI,the 1st OS(kinda)
+- You interact with the kernal through a layer of abstraction called bash
+- You can also automate those cmds with bash scripts
+##### Bash ENVVARIABLES
+- So they are extra context passed to the program thats running buy bash.
+- The stuff we mostly goes into the program as ENV variables
+- When a program starts bash clones itself, and then runs the new program in that clone, and envs are passed so that
+new program whos whats up
+- Env variables are just a way to passed dynamic values made to the user envirnment by the user to programs
+- Eg:?
+
 
 ### 2. Tokenize and Index History
 - Split each command into tokens (command + args).
