@@ -4,7 +4,7 @@ import (
 
 	//tea "github.com/charmbracelet/bubbletea"
 	"fmt"
-//	"os"
+	"os"
 	)
 
 func main() {
@@ -21,20 +21,32 @@ func main() {
 		//fmt.Println("Error running program:", err)
 		//os.Exit(1)	
 	//}
-	filepointer,err:=loadhistory()
-	if err!=nil{
-		fmt.Println(err)
 
-	}
-	a:=readbashhistory(filepointer)
-	var b int
-	for key,_:=range a{
-		b++
-		fmt.Println(key)
-	}
-	fmt.Println("count")
-	fmt.Println(b)
+//	filepointer,err:=loadhistory()
+//	if err!=nil{
+//		fmt.Println(err)
 
+//	}
+//	a:=readbashhistory(filepointer)
+//	var b int
+//	for key,val:=range a{
+//		b++
+//		fmt.Println(key)
+//		fmt.Println(val)
+//	}
+//	fmt.Println("count")
+//	fmt.Println(b)
+
+f, err := os.Open(os.Getenv("HOME") + "/.bash_history")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "open error:", err)
+		return
+	}
+	h := readbashhistory(f)
+	// print some entries
+	for cmd, tokens := range h {
+		fmt.Printf("line: %q\n tokens: %#v\n\n", cmd, tokens)
+	}
 
 	
 }
